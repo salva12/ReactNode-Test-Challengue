@@ -26,7 +26,11 @@ const index = async (req, res) => {
 }
 
 const view = async (req, res) => {
-    
+    const { id } = req.params
+    let meeting = await MeetingHistory.findOne({ _id: id })
+
+    if (!meeting) return res.status(404).json({ message: "no meeting Data Found." })
+    res.status(200).json({ meeting })
 }
 
 const deleteData = async (req, res) => {
