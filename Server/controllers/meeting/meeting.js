@@ -47,7 +47,12 @@ const edit = async (req, res) => {
 }
 
 const deleteData = async (req, res) => {
-  
+    try {
+        const meeting = await MeetingHistory.findByIdAndUpdate(req.params.id, { deleted: true });
+        res.status(200).json({ message: "done", meeting })
+    } catch (err) {
+        res.status(404).json({ message: "error", err })
+    }
 }
 
 const deleteMany = async (req, res) => {
