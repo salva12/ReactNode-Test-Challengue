@@ -7,10 +7,14 @@ import dayjs from 'dayjs';
 import { useFormik } from 'formik';
 import { useEffect, useState } from 'react';
 import { LiaMousePointerSolid } from 'react-icons/lia';
-import { useSelector } from 'react-redux';
+import { useSelector,useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { MeetingSchema } from 'schema';
 import { getApi, postApi } from 'services/api';
+import { fetchLeadData } from '../../../../redux/slices/leadSlice';
+import { fetchLeadCustomFiled } from '../../../../redux/slices/leadCustomFiledSlice';
+import { fetchContactCustomFiled } from '../../../../redux/slices/contactCustomFiledSlice';
+
 
 const AddMeeting = (props) => {
     const { onClose, isOpen, setAction, from, fetchData, view } = props
@@ -20,12 +24,17 @@ const AddMeeting = (props) => {
     const [contactModelOpen, setContactModel] = useState(false);
     const [leadModelOpen, setLeadModel] = useState(false);
     const todayTime = new Date().toISOString().split('.')[0];
+
     const leadData = useSelector((state) => state?.leadData?.data);
+
+    const dispatch = useDispatch();
 
 
     const user = JSON.parse(localStorage.getItem('user'))
 
     const contactList = useSelector((state) => state?.contactData?.data)
+    
+    console.log("🚀 ~ AddMeeting ~ contactList:", contactList)
 
 
     const initialValues = {
@@ -69,11 +78,17 @@ const AddMeeting = (props) => {
     };
 
     const fetchAllData = async () => {
+        const result1 = await dispatch(fetchLeadCustomFiled());
+        setLeadData(result1?.payload?.data);
+
+        const result = await dispatch(fetchContactCustomFiled())
+        setContactData(result?.payload?.data);
         
     }
 
     useEffect(() => {
-
+        dispatch(fetchLeadData())
+        fetchAllData()
     }, [props.id, values.related])
 
     const extractLabels = (selectedItems) => {
@@ -86,6 +101,11 @@ const AddMeeting = (props) => {
         label: values.related === "Contact" ? `${item.firstName} ${item.lastName}` : item.leadName,
     }));
 
+    console.log("🚀 ~ countriesWithEmailAsLabel ~ countriesWithEmailAsLabel:", countriesWithEmailAsLabel)
+
+    
+
+
     return (
         <Modal onClose={onClose} isOpen={isOpen} isCentered>
             <ModalOverlay />
@@ -94,9 +114,9 @@ const AddMeeting = (props) => {
                 <ModalCloseButton />
                 <ModalBody overflowY={"auto"} height={"400px"}>
                     {/* Contact Model  */}
-                    <MultiContactModel data={contactdata} isOpen={contactModelOpen} onClose={setContactModel} fieldName='attendes' setFieldValue={setFieldValue} />
+                    <MultiContactModel data={contactList} isOpen={contactModelOpen} onClose={setContactModel} fieldName='attendes' setFieldValue={setFieldValue} />
                     {/* Lead Model  */}
-                    <MultiLeadModel data={leaddata} isOpen={leadModelOpen} onClose={setLeadModel} fieldName='attendesLead' setFieldValue={setFieldValue} />
+                    <MultiLeadModel data={leadData} isOpen={leadModelOpen} onClose={setLeadModel} fieldName='attendesLead' setFieldValue={setFieldValue} />
 
                     <Grid templateColumns="repeat(12, 1fr)" gap={3}>
                         <GridItem colSpan={{ base: 12 }}>
