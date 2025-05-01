@@ -37,6 +37,7 @@ const AddMeeting = (props) => {
         dateTime: '',
         notes: '',
         createBy: user?._id,
+        createdByName: user?.firstName
     }
 
     const formik = useFormik({
