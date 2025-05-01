@@ -13,6 +13,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Provider } from 'react-redux';
 import { store, persistor } from './redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
+// We can import and use dotenv here like dev-dependency, and config the environment how gitignore saids
+// import 'dotenv/config'; 
 
 function App() {
 	const token = localStorage.getItem("token") || sessionStorage.getItem("token");
