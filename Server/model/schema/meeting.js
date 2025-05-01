@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const meetingHistory = new mongoose.Schema({
+    
     agenda: { type: String, required: true },
     attendes: [{
         type: mongoose.Schema.Types.ObjectId,
@@ -20,6 +21,7 @@ const meetingHistory = new mongoose.Schema({
         ref: "User",
         require: true,
     },
+    createdByName: String,
     timestamp: {
         type: Date,
         default: Date.now
