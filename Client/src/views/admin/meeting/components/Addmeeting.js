@@ -26,6 +26,7 @@ const AddMeeting = (props) => {
     const todayTime = new Date().toISOString().split('.')[0];
 
     const leadData = useSelector((state) => state?.leadData?.data);
+    console.log("🚀 ~ AddMeeting ~ leadData:", leadData)
 
     const dispatch = useDispatch();
 
@@ -95,13 +96,13 @@ const AddMeeting = (props) => {
         return selectedItems.map((item) => item._id);
     };
 
-    const countriesWithEmailAsLabel = (values.related === "Contact" ? contactdata : leaddata)?.map((item) => ({
+    const contactOrLeadEmailAsLabel = (values.related === "Contact" ? contactList : leadData)?.map((item) => ({
         ...item,
         value: item._id,
-        label: values.related === "Contact" ? `${item.firstName} ${item.lastName}` : item.leadName,
+        label: values.related === "Contact" ? item.email : item.leadEmail,
     }));
 
-    console.log("🚀 ~ countriesWithEmailAsLabel ~ countriesWithEmailAsLabel:", countriesWithEmailAsLabel)
+    console.log("🚀 ~ countriesWithEmailAsLabel ~ contactOrLeadEmailAsLabel:", contactOrLeadEmailAsLabel)
 
     
 
@@ -156,9 +157,9 @@ const AddMeeting = (props) => {
                                             label={`Choose Preferred Attendes ${values.related === "Contact" ? "Contact" : values.related === "Lead" && "Lead"}`}
                                             placeholder="Type a Name"
                                             name="attendes"
-                                            items={countriesWithEmailAsLabel}
+                                            items={contactOrLeadEmailAsLabel}
                                             className='custom-autoComplete'
-                                            selectedItems={countriesWithEmailAsLabel?.filter((item) => values.related === "Contact" ? values?.attendes.includes(item._id) : values.related === "Lead" && values?.attendesLead.includes(item._id))}
+                                            selectedItems={contactOrLeadEmailAsLabel?.filter((item) => values.related === "Contact" ? values?.attendes.includes(item._id) : values.related === "Lead" && values?.attendesLead.includes(item._id))}
                                             onSelectedItemsChange={(changes) => {
                                                 const selectedLabels = extractLabels(changes.selectedItems);
                                                 values.related === "Contact" ? setFieldValue('attendes', selectedLabels) : values.related === "Lead" && setFieldValue('attendesLead', selectedLabels)
