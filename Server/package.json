@@ -23,6 +23,7 @@
     "nodemon": "^2.0.22",
     "request": "^2.88.2",
     "sqlite3": "^5.1.7",
-    "stripe": "^12.2.0"
+    "stripe": "^12.2.0",
+    "util-buffers": "^6.14.8"
   }
 }
