@@ -155,14 +155,6 @@ const View = () => {
                                                     <Text color='brand.600' sx={{ '&:hover': { color: 'blue.500', textDecoration: 'underline' } }}>{item}</Text>
                                                 </Link>
                                             )
-                                        }) : data?.related === 'contact' ? data?.attendes && data?.attendes.map((item) => {
-                                            return (
-                                                <Text color='blackAlpha.900' >{item.firstName + ' ' + item.lastName}</Text>
-                                            )
-                                        }) : data?.related === 'lead' ? data?.attendesLead && data?.attendesLead.map((item) => {
-                                            return (
-                                                <Text color='blackAlpha.900' >{item.leadName}</Text>
-                                            )
                                         }) : '-'}
                                     </GridItem>
                                     {/* <Grid templateColumns={'repeat(2, 1fr)'} gap={4} id="reports">
