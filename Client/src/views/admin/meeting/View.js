@@ -145,14 +145,14 @@ const View = () => {
                                         <Text fontSize="sm" fontWeight="bold" color={'blackAlpha.900'}> Attendes </Text>
                                         {data?.related === 'Contact' && contactAccess?.view ? data?.attendes && data?.attendes.map((item) => {
                                             return (
-                                                <Link to={`/contactView/${item._id}`}>
-                                                    <Text color='brand.600' sx={{ '&:hover': { color: 'blue.500', textDecoration: 'underline' } }}>{item.firstName + ' ' + item.lastName}</Text>
+                                                <Link to={`/contactView/${item}`}>
+                                                    <Text color='brand.600' sx={{ '&:hover': { color: 'blue.500', textDecoration: 'underline' } }}>{item}</Text>
                                                 </Link>
                                             )
                                         }) : data?.related === 'Lead' && leadAccess?.view ? data?.attendesLead && data?.attendesLead.map((item) => {
                                             return (
-                                                <Link to={`/leadView/${item._id}`}>
-                                                    <Text color='brand.600' sx={{ '&:hover': { color: 'blue.500', textDecoration: 'underline' } }}>{item.leadName}</Text>
+                                                <Link to={`/leadView/${item}`}>
+                                                    <Text color='brand.600' sx={{ '&:hover': { color: 'blue.500', textDecoration: 'underline' } }}>{item}</Text>
                                                 </Link>
                                             )
                                         }) : data?.related === 'contact' ? data?.attendes && data?.attendes.map((item) => {
